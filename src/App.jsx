@@ -5,7 +5,11 @@ import "./App.scss";
 import AdminDashboard from "./Pages/AdminDashboard";
 function App() {
   return (
-    <div style={{border:"2px solid blue"}}>
+    <div
+      style={{
+        border: "2px solid blue",
+      }}
+    >
       <AdminDashboard />
     </div>
   );
