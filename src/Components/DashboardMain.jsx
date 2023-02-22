@@ -1,11 +1,11 @@
 import React from "react";
-// import { Table } from "@mantine/core";
+import { FaStoreAlt } from "react-icons/fa";
 const img =
   "https://res.cloudinary.com/isreal/image/upload/v1675285922/My%20portfolio%20Project/1671744344371-removebg-preview_dxwbbb.png";
 
 // ICONS
 import { FaShoppingCart, FaPeopleCarry, FaChartLine } from "react-icons/fa";
-function DashboardMain() {
+function DashboardMain({ products }) {
   return (
     <div id="content">
       <main>
@@ -33,6 +33,13 @@ function DashboardMain() {
         </div>
 
         <ul className="box-info">
+          <li>
+            <FaStoreAlt className="bx bxs-calendar-check" />
+            <span className="text">
+              <h3>{products.length}</h3>
+              <p>Products</p>
+            </span>
+          </li>
           <li>
             <FaShoppingCart className="bx bxs-calendar-check" />
             <span className="text">

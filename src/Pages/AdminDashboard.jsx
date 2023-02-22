@@ -2,12 +2,12 @@ import React from "react";
 import Sidebar from "../Components/Sidebar";
 import Topbar from "../Components/Topbar";
 import DashboardMain from "../Components/DashboardMain";
-function AdminDashboard() {
+function AdminDashboard({ products }) {
   return (
     <div>
       {/* <Sidebar /> */}
       {/* <Topbar /> */}
-      <DashboardMain />
+      <DashboardMain products={products} />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.scss";
 
@@ -9,17 +9,66 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Topbar from "./Components/Topbar";
 import Sidebar from "./Components/Sidebar";
 import Store from "./Pages/Store";
+import EditProduct from "./Pages/EditProduct";
 // PAGES
 import AdminDashboard from "./Pages/AdminDashboard";
 function App() {
+  const [products, setProducts] = useState([]);
+
+  const fetchProducts = () => {
+    // FETCH PRODUCTS
+    fetch("http://localhost:1234/api/v1/products/allproducts")
+      .then((res) => res.json())
+      .then((data) => {
+        const productsWithImage = data.map((product) => {
+          const encodedImage = product.productimage;
+          const blob = b64toBlob(encodedImage);
+          const imageUrl = URL.createObjectURL(blob);
+          return {
+            ...product,
+            productimage: imageUrl,
+          };
+        });
+        // Sort products by timestamp in reverse order
+        const sortedProducts = productsWithImage.sort(
+          (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+        );
+        setProducts(sortedProducts);
+      });
+  };
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+  // function to convert base64 string to blob object
+  const b64toBlob = (base64String) => {
+    const byteString = atob(base64String.split(",")[1]);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], { type: "image/png" }); // assuming the image is PNG format
+  };
   return (
     <div>
       <Router>
         <Topbar />
         <Sidebar />
         <Routes>
-          <Route path="/admindashboard" element={<AdminDashboard />} />
-          <Route path="/store" element={<Store />} />
+          <Route
+            path="/admindashboard"
+            element={<AdminDashboard products={products} />}
+          />
+          <Route
+            path="/store"
+            element={
+              <Store fetchProducts={fetchProducts} products={products} />
+            }
+          />
+          <Route
+            path="/productedit/:_id"
+            element={<EditProduct products={products} />}
+          />
         </Routes>
       </Router>
     </div>

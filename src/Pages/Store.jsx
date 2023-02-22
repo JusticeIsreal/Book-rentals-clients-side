@@ -2,7 +2,7 @@ import StoreItems from "../Components/StoreItems";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-function Store() {
+function Store({ fetchProducts, products }) {
   // useform config
   const {
     register,
@@ -50,15 +50,18 @@ function Store() {
   // POST PRODUCT
   const postProductAPI = "http://localhost:1234/api/v1/products/addproduct";
 
-  const onSubmit = (data) => {
-    // console.log(data, (data.productimage = imageBase64));
+  const onSubmit = (data, e) => {
     const productDetails = { ...data, productimage: imageBase64 };
     console.log(productDetails);
     axios
       .post(postProductAPI, productDetails)
-      .then((resp) => {})
+      .then((resp) => {
+        fetchProducts();
+        e.target.reset();
+        setImageBase64("");
+        setPreviewImg(null);
+      })
       .catch((error) => console.log(error));
-    // reset();
   };
 
   // display form on and of
@@ -198,7 +201,7 @@ function Store() {
                 <select {...register("productclass", { required: true })}>
                   <option value="">Select</option>
                   <option value="promo">Promo</option>
-                  <option value="newarrival">New-Arrival</option>
+                  <option value="newarrival">New</option>
                   <option value="bestseller">Best-Seller</option>
                 </select>
                 {errors.productclass && (
@@ -265,7 +268,7 @@ function Store() {
               </form>
             </div>
           )}
-          <StoreItems />
+          <StoreItems fetchProducts={fetchProducts} products={products} />
         </main>
       </div>
     </div>

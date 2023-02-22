@@ -1,60 +1,39 @@
 import React, { useState, useEffect } from "react";
-
-function StoreItems() {
-  const [products, setProducts] = useState([]);
-
-  const fetchProducts = () => {
-    fetch("http://localhost:1234/api/v1/products/allproducts")
-      .then((res) => res.json())
-      .then((data) => {
-        const productsWithImage = data.map((product) => {
-          const encodedImage = product.productimage;
-          const blob = b64toBlob(encodedImage);
-          const imageUrl = URL.createObjectURL(blob);
-          return {
-            ...product,
-            productimage: imageUrl,
-          };
-        });
-        // Sort products by timestamp in reverse order
-        const sortedProducts = productsWithImage.sort(
-          (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
-        );
-        setProducts(sortedProducts);
-      });
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  // function to convert base64 string to blob object
-  const b64toBlob = (base64String) => {
-    const byteString = atob(base64String.split(",")[1]);
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
-    for (let i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
-    return new Blob([ab], { type: "image/png" }); // assuming the image is PNG format
-  };
-
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { HiRefresh } from "react-icons/hi";
+// ICONS
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
+function StoreItems({ fetchProducts, products }) {
   return (
     <div>
-      <div
-        onClick={() => fetchProducts()}
-        style={{ border: "2px solid red", cursor: "pointer" }}
-      >
-        PRESS
-      </div>
       <div className="table-data">
-        <div className="order">
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            height: "60px",
+            paddingTop: "50px",
+          }}
+        >
           <div className="head">
             <h3>Product List</h3>
-            <i className="bx bx-search"></i>
-            <i className="bx bx-filter"></i>
           </div>
-
+          <div
+            className="head"
+            onClick={() => fetchProducts()}
+            style={{
+              border: "2px solid #3c91e6",
+              padding: "0 5px",
+              cursor: "pointer",
+            }}
+          >
+            <HiRefresh />
+            Re-Fresh
+          </div>
+        </div>
+        <div className="order" style={{ position: "relative" }}>
           <table
             className="table"
             style={{
@@ -65,14 +44,14 @@ function StoreItems() {
             <thead>
               <tr>
                 <th>Img</th>
-                <th style={{ width: "10%" }}>Name</th>
-                <th style={{ width: "10%" }}>Price</th>
-                <th style={{ width: "10%" }}>Slash</th>
-                <th style={{ width: "10%" }}>ISBN</th>
-                <th style={{ width: "10%" }}>Cat</th>
-                <th style={{ width: "10%" }}>Class</th>
-                <th style={{ width: "30%" }}>Desc</th>
-                <th style={{ width: "10%" }}>Status</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Slash</th>
+                <th>ISBN</th>
+                <th>Cat</th>
+                <th>Class</th>
+                <th>Desc</th>
+                <th>Edit</th>
               </tr>
             </thead>
 
@@ -89,6 +68,7 @@ function StoreItems() {
 export default StoreItems;
 
 function StoreItemsIndividual({
+  _id,
   productimage,
   productname,
   productprice,
@@ -99,8 +79,30 @@ function StoreItemsIndividual({
   productavailable,
   productdescription,
 }) {
+  const deleteProduct = async (_id) => {
+    //     const tokenSaved = localStorage.getItem("token");
+    // const jsonData = JSON.parse(tokenSaved);
+    // const token = jsonData.token;
+    await axios
+      .delete(
+        `http://localhost:1234/api/v1/products/deleteproduct/${_id}`
+        // {
+        //   // headers: {
+        //   //   authorization: `Bearer ${token}`,
+        //   // },
+        // }
+      )
+
+      .then((resp) => {
+        // window.location.reload();
+      })
+      .catch((err) => {
+        throw err;
+      });
+  };
   return (
-    <tbody>
+    //
+    <tbody style={{ color: "black" }}>
       <tr>
         <td>
           <img
@@ -109,18 +111,32 @@ function StoreItemsIndividual({
             style={{ width: "40px", borderRadius: "0%", margin: "5px" }}
           />
         </td>
-        <td>
+        <td style={{ width: "11%" }}>
           <p>{productname}</p>
         </td>
-        <td>{productprice}</td>
-        <td>{productoldprice}</td>
-        <td>{productnumber}</td>
-        <td>{productcategory}</td>
-        <td>{productclass}</td>
-        <td>{productdescription}</td>
-
-        <td>
-          <span className="status completed">Completed</span>
+        <td style={{ width: "10%", margin: "5px" }}>{productprice}</td>
+        <td style={{ width: "10%", margin: "5px" }}>{productoldprice}</td>
+        <td style={{ width: "10%", margin: "5px" }}>{productnumber}</td>
+        <td style={{ width: "10%", margin: "5px" }}>{productcategory}</td>
+        <td style={{ width: "10%", margin: "5px" }}>{productclass}</td>
+        <td style={{ width: "27%", margin: "5px" }}>{productdescription}</td>
+        <td
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            fontSize: "20px",
+          }}
+        >
+          <Link to={`/productedit/${_id}`}>
+            <FaEdit
+              style={{ cursor: "pointer", color: "#3c91e6", margin: "0 12px" }}
+            />
+          </Link>{" "}
+          <FaTrashAlt
+            style={{ cursor: "pointer", color: "red" }}
+            onClick={() => deleteProduct(_id)}
+          />
         </td>
       </tr>
     </tbody>
