@@ -5,8 +5,8 @@ import DashboardMain from "../Components/DashboardMain";
 function AdminDashboard() {
   return (
     <div>
-      <Sidebar />
-      <Topbar />
+      {/* <Sidebar /> */}
+      {/* <Topbar /> */}
       <DashboardMain />
     </div>
   );

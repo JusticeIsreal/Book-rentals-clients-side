@@ -204,7 +204,6 @@ body {
   }
 
   #sidebar .side-menu li {
-    // border: 2px solid red;
     width: 100%;
     height: 48px;
     background: transparent;
@@ -218,6 +217,8 @@ body {
   #sidebar .side-menu li.active {
     background: var(--grey);
     position: relative;
+    // border: 2px solid red;
+    z-index: 678;
   }
 
   #sidebar .side-menu .list-items {
@@ -227,6 +228,7 @@ body {
   #sidebar .side-menu .list-items .text {
     font-size: 18px;
     margin-left: 20px;
+    width: 100%;
   }
   #sidebar .side-menu .list-items .list-icons {
     font-size: 20px;
@@ -418,6 +420,7 @@ body {
   align-items: center;
   grid-gap: 10px;
   font-weight: 500;
+  cursor: pointer;
 }
 
 #content main .box-info {
@@ -479,6 +482,8 @@ body {
   background: var(--light);
   padding: 24px;
   overflow-x: auto;
+  // border: 2px solid red;
+  width: 100%;
 }
 #content main .table-data .head {
   display: flex;
@@ -489,162 +494,65 @@ body {
 }
 #content main .table-data .head h3 {
   margin-right: auto;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
 }
 #content main .table-data .head .bx {
   cursor: pointer;
 }
-#content main .table-d {
-  border: 2px solid red;
-}
 
-// #content main .table-data .order {
-//   flex-grow: 1;
-//   flex-basis: 500px;
-//   border: 2px solid red;
-// }
-// #content main .table-data .order table {
-//   width: 100%;
-//   border-collapse: collapse;
-//   border: 2px solid red;
-// }
-// #content main .table-data .order table th {
-//   padding-bottom: 12px;
-//   font-size: 13px;
-//   text-align: left;
-//   border-bottom: 1px solid var(--grey);
-//   border: 2px solid red;
-// }
-// #content main .table-data .order table td {
-//   padding: 16px 0;
-//   border: 2px solid red;
-// }
-// #content main .table-data .order table tr td:first-child {
-//   display: flex;
-//   align-items: center;
-//   grid-gap: 12px;
-//   padding-left: 6px;
-// }
-// #content main .table-data .order table td img {
-//   width: 36px;
-//   height: 36px;
-//   border-radius: 50%;
-//   object-fit: cover;
-// }
-// #content main .table-data .order table tbody tr:hover {
-//   background: var(--grey);
-//   border: 2px solid red;
-// }
-// #content main .table-data .order table tr td .status {
-//   font-size: 10px;
-//   padding: 6px 16px;
-//   color: var(--light);
-//   border-radius: 20px;
-//   font-weight: 700;
-//   border: 2px solid red;
-// }
-#content main .table-data .order table tr td .status.completed {
+#content main .table {
+  width: 100%;
+  border-collapse: collapse;
+  //   border: 2px solid red;
+}
+#content main .table th {
+  padding-bottom: 12px;
+  font-size: 13px;
+  text-align: left;
+  border-bottom: 1px solid var(--grey);
+  // border: 2px solid red;
+}
+#content main .table td {
+  padding: 8px 0;
+  font-size: 10px;
+  
+}
+#content main .table tr td:first-child {
+  display: flex;
+  align-items: center;
+  grid-gap: 12px;
+  padding-left: 6px;
+}
+#content main .table td img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+#content main .table tbody tr:hover {
+  background: var(--grey);
+  //   border: 2px solid red;
+}
+#content main .table tr td .status {
+  font-size: 8px;
+  padding: 4px 8px;
+  color: var(--light);
+  border-radius: 20px;
+  font-weight: 500;
+  //   border: 2px solid red;
+}
+#content main .table tr td .status.completed {
   background: var(--blue);
 }
-#content main .table-data .order table tr td .status.process {
+#content main .table tr td .status.process {
   background: var(--yellow);
 }
-#content main .table-data .order table tr td .status.pending {
+#content main .table tr td .status.pending {
   background: var(--orange);
 }
 
-#content main .table-data .todo {
-  flex-grow: 1;
-  flex-basis: 300px;
-}
-#content main .table-data .todo .todo-list {
-  width: 100%;
-}
-#content main .table-data .todo .todo-list li {
-  width: 100%;
-  margin-bottom: 16px;
-  background: var(--grey);
-  border-radius: 10px;
-  padding: 14px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-#content main .table-data .todo .todo-list li .bx {
-  cursor: pointer;
-}
-#content main .table-data .todo .todo-list li.completed {
-  border-left: 10px solid var(--blue);
-}
-#content main .table-data .todo .todo-list li.not-completed {
-  border-left: 10px solid var(--orange);
-}
-#content main .table-data .todo .todo-list li:last-child {
-  margin-bottom: 0;
-}
-/* MAIN */
-/* CONTENT */
-
-// @media screen and (max-width: 768px) {
-//   #sidebar {
-//     width: 200px;
-//   }
-
-//   #content {
-//     width: calc(100% - 60px);
-//     left: 200px;
-//   }
-
-//   #content nav .nav-link {
-//     display: none;
-//   }
-// }
-
-// @media screen and (max-width: 576px) {
-//   #content nav form .form-input input {
-//     display: none;
-//   }
-
-//   #content nav form .form-input button {
-//     width: auto;
-//     height: auto;
-//     background: transparent;
-//     border-radius: none;
-//     color: var(--dark);
-//   }
-
-//   #content nav form.show .form-input input {
-//     display: block;
-//     width: 100%;
-//   }
-//   #content nav form.show .form-input button {
-//     width: 36px;
-//     height: 100%;
-//     border-radius: 0 36px 36px 0;
-//     color: var(--light);
-//     background: var(--red);
-//   }
-
-//   #content nav form.show ~ .notification,
-//   #content nav form.show ~ .profile {
-//     display: none;
-//   }
-
-//   #content main .box-info {
-//     grid-template-columns: 1fr;
-//   }
-
-//   #content main .table-data .head {
-//     min-width: 420px;
-//   }
-//   #content main .table-data .order table {
-//     min-width: 420px;
-//   }
-//   #content main .table-data .todo .todo-list {
-//     min-width: 420px;
-//   }
-// }
+//
 @media only screen and (min-width: 768px) {
   #content main .head-title .left h1 {
     font-size: 36px;
@@ -675,6 +583,23 @@ body {
   #content main .table-data .head h3 {
     font-size: 24px;
   }
+
+  #content main .table-data .head h3 {
+    margin-right: auto;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  #content main .table tr td .status {
+    font-size: 10px;
+    padding: 6px 16px;
+    font-weight: 700;
+    //   border: 2px solid red;
+  }
+  #content main .table td {
+    padding: 15px 0;
+    font-size: 15px;
+   
+  }
 }
 /* SIDEBAR */
 * {
@@ -686,17 +611,6 @@ body {
   //   font-family: "Orbitron", sans-serif;
   font-family: poppins;
 }
-
-// *::-webkit-scrollbar-track {
-//   background-color: rgba(245, 245, 245, 0);
-// }
-
-// *::-webkit-scrollbar-thumb {
-//   background-color: transparent;
-// }
-// *::-webkit-scrollbar {
-//   background: none;
-// }
 
 $font-family: "Poppins", sans-serif;
 $bg-light: #f9f9f9;
@@ -744,16 +658,72 @@ $light-orange: #ffe0d3;
   }
 }
 
-// SIDE BAR
-.sidebar {
-  //   border: 2px solid red;
-  //   position: absolute;
-  //   width: 100vw;
+// STORE PAGE
 
-  @include responsive(bigphone) {
-    // margin-top: 50px;
+.store-main-con {
+  position: relative;
+
+  .store-form-container {
+    width: 100%;
+
+    overflow: hidden;
+    animation: showform 0.2s linear;
+    @keyframes showform {
+      0% {
+        // transform: scale(0);
+        height: 0;
+      }
+      100% {
+        // transform: scale(1);
+        height: 660px;
+      }
+    }
+
+    form {
+      @include flexDisplay(space-around, flex-start, column);
+
+      label {
+        color: var(--blue);
+        margin-top: 10px;
+        font-size: 15px;
+        @include responsive(bigphone) {
+          font-size: 20px;
+        }
+      }
+      input,
+      select {
+        width: 100%;
+        height: 40px;
+        padding: 5px;
+        border: 1px solid var(--blue);
+
+        @include responsive(bigphone) {
+          height: 50px;
+        }
+      }
+      .file-input {
+        border: none;
+        outline: none;
+      }
+
+      .submit-btn {
+        background: var(--blue);
+        color: var(--light);
+        font-weight: bolder;
+        border: none;
+        &:hover {
+          background: var(--light);
+          color: var(--blue);
+          border: 2px solid var(--blue);
+        }
+      }
+    }
+    @include responsive(bigphone) {
+      // margin-top: 50px;
+    }
   }
 }
+
 //   @include flexDisplay(space-around, center, column);
 
 //   @include responsive(bigphone) {

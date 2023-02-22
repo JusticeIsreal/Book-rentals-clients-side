@@ -1,4 +1,5 @@
 import React from "react";
+// import { Table } from "@mantine/core";
 const img =
   "https://res.cloudinary.com/isreal/image/upload/v1675285922/My%20portfolio%20Project/1671744344371-removebg-preview_dxwbbb.png";
 
@@ -56,13 +57,14 @@ function DashboardMain() {
         </ul>
 
         <div className="table-data">
-          <div clasName="order">
+          <div className="order">
             <div className="head">
               <h3>Recent Orders</h3>
               <i className="bx bx-search"></i>
               <i className="bx bx-filter"></i>
             </div>
-            <table>
+
+            <table className="table">
               <thead>
                 <tr>
                   <th>User</th>
@@ -73,11 +75,6 @@ function DashboardMain() {
               <tbody>
                 <tr>
                   <td>
-                    <img
-                      src={img}
-                      alt=""
-                      style={{ width: "50px", borderRadius: "50%" }}
-                    />
                     <p>John Doe</p>
                   </td>
                   <td>01-10-2021</td>
@@ -87,11 +84,6 @@ function DashboardMain() {
                 </tr>
                 <tr className="table-d">
                   <td>
-                    <img
-                      src={img}
-                      alt=""
-                      style={{ width: "50px", borderRadius: "50%" }}
-                    />
                     <p>John Doe</p>
                   </td>
                   <td>01-10-2021</td>
@@ -101,11 +93,6 @@ function DashboardMain() {
                 </tr>
                 <tr className="table-d">
                   <td>
-                    <img
-                      src={img}
-                      alt=""
-                      style={{ width: "50px", borderRadius: "50%" }}
-                    />
                     <p>John Doe</p>
                   </td>
                   <td>01-10-2021</td>
@@ -115,11 +102,6 @@ function DashboardMain() {
                 </tr>
                 <tr className="table-d">
                   <td>
-                    <img
-                      src={img}
-                      alt=""
-                      style={{ width: "50px", borderRadius: "50%" }}
-                    />
                     <p>John Doe</p>
                   </td>
                   <td>01-10-2021</td>
@@ -129,11 +111,33 @@ function DashboardMain() {
                 </tr>
                 <tr className="table-d">
                   <td>
-                    <img
-                      src={img}
-                      alt=""
-                      style={{ width: "50px", borderRadius: "50%" }}
-                    />
+                    <p>John Doe</p>
+                  </td>
+                  <td>01-10-2021</td>
+                  <td>
+                    <span className="status completed">Completed</span>
+                  </td>
+                </tr>
+                <tr className="table-d">
+                  <td>
+                    <p>John Doe</p>
+                  </td>
+                  <td>01-10-2021</td>
+                  <td>
+                    <span className="status completed">Completed</span>
+                  </td>
+                </tr>
+                <tr className="table-d">
+                  <td>
+                    <p>John Doe</p>
+                  </td>
+                  <td>01-10-2021</td>
+                  <td>
+                    <span className="status completed">Completed</span>
+                  </td>
+                </tr>
+                <tr className="table-d">
+                  <td>
                     <p>John Doe</p>
                   </td>
                   <td>01-10-2021</td>
@@ -143,35 +147,6 @@ function DashboardMain() {
                 </tr>
               </tbody>
             </table>
-          </div>
-          <div className="todo">
-            <div className="head">
-              <h3>Todos</h3>
-              <i className="bx bx-plus"></i>
-              <i className="bx bx-filter"></i>
-            </div>
-            <ul className="todo-list">
-              <li className="completed">
-                <p>Todo List</p>
-                <i className="bx bx-dots-vertical-rounded"></i>
-              </li>
-              <li className="completed">
-                <p>Todo List</p>
-                <i className="bx bx-dots-vertical-rounded"></i>
-              </li>
-              <li className="not-completed">
-                <p>Todo List</p>
-                <i className="bx bx-dots-vertical-rounded"></i>
-              </li>
-              <li className="completed">
-                <p>Todo List</p>
-                <i className="bx bx-dots-vertical-rounded"></i>
-              </li>
-              <li className="not-completed">
-                <p>Todo List</p>
-                <i className="bx bx-dots-vertical-rounded"></i>
-              </li>
-            </ul>
           </div>
         </div>
       </main>
