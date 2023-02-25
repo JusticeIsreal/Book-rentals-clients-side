@@ -44,7 +44,7 @@ function Sidebar() {
     } else {
       transaction.className = "";
     }
-    if (e.target.innerHTML === "Message") {
+    if (e.target.innerHTML === "Notification") {
       message.className = "active";
     } else {
       message.className = "";
@@ -92,15 +92,15 @@ function Sidebar() {
           </li>
 
           <li ref={transactionRef} onClick={(e) => addActive(e)}>
-            <a href="#" className="list-items">
+            <Link to="/transaction" className="list-items">
               <FaMoneyCheckAlt className="list-icons" />
               <span className="text">Transactions</span>
-            </a>
+            </Link>
           </li>
           <li ref={messageRef} onClick={(e) => addActive(e)}>
             <a href="#" className="list-items">
               <RiMessage2Fill className="list-icons" />
-              <span className="text">Message</span>
+              <span className="text">Notification</span>
             </a>
           </li>
           <li ref={teamRef} onClick={(e) => addActive(e)}>

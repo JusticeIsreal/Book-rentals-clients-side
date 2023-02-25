@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 import axios from "axios";
 import { HiRefresh } from "react-icons/hi";
 // ICONS
@@ -56,7 +56,11 @@ function StoreItems({ fetchProducts, products }) {
             </thead>
 
             {products.map((product) => (
-              <StoreItemsIndividual key={product._id} {...product} />
+              <StoreItemsIndividual
+                key={product._id}
+                {...product}
+                fetchProducts={fetchProducts}
+              />
             ))}
           </table>
         </div>
@@ -68,6 +72,7 @@ function StoreItems({ fetchProducts, products }) {
 export default StoreItems;
 
 function StoreItemsIndividual({
+  fetchProducts,
   _id,
   productimage,
   productname,
@@ -95,6 +100,7 @@ function StoreItemsIndividual({
 
       .then((resp) => {
         // window.location.reload();
+        fetchProducts();
       })
       .catch((err) => {
         throw err;
@@ -119,7 +125,9 @@ function StoreItemsIndividual({
         <td style={{ width: "10%", margin: "5px" }}>{productnumber}</td>
         <td style={{ width: "10%", margin: "5px" }}>{productcategory}</td>
         <td style={{ width: "10%", margin: "5px" }}>{productclass}</td>
-        <td style={{ width: "27%", margin: "5px" }}>{productdescription}</td>
+        <td style={{ width: "27%", margin: "5px" }}>
+          {productdescription.substring(0, 70)} . . .
+        </td>
         <td
           style={{
             display: "flex",

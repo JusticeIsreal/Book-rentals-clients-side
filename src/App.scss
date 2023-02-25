@@ -516,7 +516,6 @@ body {
 #content main .table td {
   padding: 8px 0;
   font-size: 10px;
-  
 }
 #content main .table tr td:first-child {
   display: flex;
@@ -598,7 +597,10 @@ body {
   #content main .table td {
     padding: 15px 0;
     font-size: 15px;
-   
+  }
+  #content .transaction-ul li {
+    width: 23% !important;
+    max-width: 500px;
   }
 }
 /* SIDEBAR */
@@ -723,7 +725,15 @@ $light-orange: #ffe0d3;
     }
   }
 }
+#content {
+  .transaction-ul {
+    width: 100%;
 
+    li {
+      width: 100%;
+    }
+  }
+}
 //   @include flexDisplay(space-around, center, column);
 
 //   @include responsive(bigphone) {

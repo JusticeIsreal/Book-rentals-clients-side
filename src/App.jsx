@@ -10,10 +10,13 @@ import Topbar from "./Components/Topbar";
 import Sidebar from "./Components/Sidebar";
 import Store from "./Pages/Store";
 import EditProduct from "./Pages/EditProduct";
+import Transaction from "./Pages/Transaction";
+import EditTransaction from "./Pages/EditTransaction";
 // PAGES
 import AdminDashboard from "./Pages/AdminDashboard";
 function App() {
   const [products, setProducts] = useState([]);
+  const [transaction, setTransaction] = useState([]);
 
   const fetchProducts = () => {
     // FETCH PRODUCTS
@@ -35,10 +38,28 @@ function App() {
         );
         setProducts(sortedProducts);
       });
+    // FETCH TRANSACTION
+    fetch("http://localhost:1234/api/v1/transaction/alltransaction")
+      .then((res) => res.json())
+      .then((data) => {
+        setTransaction(data.data);
+        // console.log(transaction);
+      })
+      .catch((err) => {
+        throw err;
+      });
+
+    // console.log(transaction ? transaction : "no");
   };
+
+  // SORT TRANSACTION
+  const sortTransaction = transaction.sort(
+    (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+  );
   useEffect(() => {
     fetchProducts();
   }, []);
+
   // function to convert base64 string to blob object
   const b64toBlob = (base64String) => {
     const byteString = atob(base64String.split(",")[1]);
@@ -68,6 +89,26 @@ function App() {
           <Route
             path="/productedit/:_id"
             element={<EditProduct products={products} />}
+          />
+          <Route
+            path="/transaction"
+            element={
+              <Transaction
+                fetchProducts={fetchProducts}
+                products={products}
+                sortTransaction={sortTransaction}
+              />
+            }
+          />
+          <Route
+            path="/transactionedit/:_id"
+            element={
+              <EditTransaction
+                fetchProducts={fetchProducts}
+                products={products}
+                sortTransaction={sortTransaction}
+              />
+            }
           />
         </Routes>
       </Router>

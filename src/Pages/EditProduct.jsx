@@ -2,7 +2,8 @@ import StoreItems from "../Components/StoreItems";
 import React, { useRef, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { MdArrowBackIos } from "react-icons/md";
 function EditProduct({ products }) {
   // FETCH SINGLE ITEM
   const { _id } = useParams();
@@ -81,7 +82,8 @@ function EditProduct({ products }) {
 
   // display form on and of
   const [formShow, setFormShow] = useState(false);
-
+  // NAVIGATE PAGE BACK
+  const history = useNavigate();
   return (
     <div>
       <div className="store-main-con">
@@ -93,19 +95,25 @@ function EditProduct({ products }) {
 
                 <ul className="breadcrumb">
                   <li>
-                    <a href="#">Dashboard</a>
+                    <a href="">Dashboard</a>
                   </li>
                   <li>
                     <i className="bx bx-chevron-right"></i>
                   </li>
                   <li>
-                    <a className="active" href="#">
-                      Store
-                    </a>
+                    <a href="">Store</a>
                   </li>
-                  <li>
-                    <a className="active" href="#">
-                      product
+                  <li onClick={() => history(-1)}>
+                    <a
+                      className="active"
+                      href="#"
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <MdArrowBackIos /> Back
                     </a>
                   </li>
                 </ul>

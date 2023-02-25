@@ -1,7 +1,9 @@
 import StoreItems from "../Components/StoreItems";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { MdArrowBackIos } from "react-icons/md";
 function Store({ fetchProducts, products }) {
   // useform config
   const {
@@ -66,7 +68,8 @@ function Store({ fetchProducts, products }) {
 
   // display form on and of
   const [formShow, setFormShow] = useState(false);
-
+  // NAVIGATE PAGE BACK
+  const history = useNavigate();
   return (
     <div className="store-main-con">
       <div id="content">
@@ -82,9 +85,17 @@ function Store({ fetchProducts, products }) {
                 <li>
                   <i className="bx bx-chevron-right"></i>
                 </li>
-                <li>
-                  <a className="active" href="#">
-                    Store
+                <li onClick={() => history(-1)}>
+                  <a
+                    className="active"
+                    href="#"
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <MdArrowBackIos /> Back
                   </a>
                 </li>
               </ul>

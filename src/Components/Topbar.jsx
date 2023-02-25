@@ -19,7 +19,7 @@ function Topbar() {
             <AiFillBell className="bx bxs-bell" />
             <span className="num">8</span>
           </div>
-          <a href="#" className="profile">
+          <a href="" className="profile">
             <img src={img} alt="" />
           </a>
         </div>
