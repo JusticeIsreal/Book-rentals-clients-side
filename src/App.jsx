@@ -12,11 +12,13 @@ import Store from "./Pages/Store";
 import EditProduct from "./Pages/EditProduct";
 import Transaction from "./Pages/Transaction";
 import EditTransaction from "./Pages/EditTransaction";
+import CustomersData from "./Pages/CustomersData";
 // PAGES
 import AdminDashboard from "./Pages/AdminDashboard";
 function App() {
   const [products, setProducts] = useState([]);
   const [transaction, setTransaction] = useState([]);
+  const [users, setUsers] = useState([]);
 
   const fetchProducts = () => {
     // FETCH PRODUCTS
@@ -49,7 +51,15 @@ function App() {
         throw err;
       });
 
-    // console.log(transaction ? transaction : "no");
+    // FETCH USERS
+    fetch("http://localhost:1234/api/v1/userverification/allusers")
+      .then((res) => res.json())
+      .then((data) => {
+        setUsers(data.data);
+      })
+      .catch((err) => {
+        throw err;
+      });
   };
 
   // SORT TRANSACTION
@@ -110,6 +120,7 @@ function App() {
               />
             }
           />
+          <Route path="/customer" element={<CustomersData users={users} />} />
         </Routes>
       </Router>
     </div>

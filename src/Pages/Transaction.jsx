@@ -2,16 +2,51 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { HiRefresh, HiCloudDownload } from "react-icons/hi";
-import { MdArrowBackIos } from "react-icons/md";
+import { MdArrowBackIos, MdPendingActions } from "react-icons/md";
 // ICONS
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { FaStoreAlt } from "react-icons/fa";
+import { GiConfirmed } from "react-icons/gi";
+import { GoIssueOpened } from "react-icons/go";
 
 import { FaShoppingCart, FaPeopleCarry, FaChartLine } from "react-icons/fa";
 function Transaction({ fetchProducts, products, sortTransaction }) {
   // Navgat back
   const history = useNavigate();
 
+  // TRANSACTION STATUS
+  const [allTransaction, setAllTransaction] = useState([]);
+  const [deliveredTransaction, setDeliveredTransaction] = useState([]);
+  const [processingTransaction, setProccessingTransaction] = useState([]);
+  const [openTransaction, setOpenTransaction] = useState([]);
+
+  const fetchTransactionStatus = () => {
+    // FETCH TRANSACTION
+    fetch("http://localhost:1234/api/v1/transaction/transactionstatus")
+      .then((res) => res.json())
+      .then((data) => {
+        setDeliveredTransaction(data.Delivered);
+        setProccessingTransaction(data.Processing);
+        setOpenTransaction(data.Open);
+        // console.log(data);
+      })
+      .catch((error) => {
+        throw Error(error);
+      });
+    fetch("http://localhost:1234/api/v1/transaction/alltransaction")
+      .then((res) => res.json())
+      .then((data) => {
+        setAllTransaction(data.data);
+        // console.log(data.data);
+      })
+      .catch((error) => {
+        throw Error(error);
+      });
+  };
+
+  useEffect(() => {
+    fetchTransactionStatus();
+  }, []);
   return (
     <div id="content">
       <main>
@@ -20,7 +55,7 @@ function Transaction({ fetchProducts, products, sortTransaction }) {
           style={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "start",
+            justifyContent: "space-around",
           }}
         >
           <div
@@ -82,31 +117,31 @@ function Transaction({ fetchProducts, products, sortTransaction }) {
               }}
             >
               <li>
-                <FaStoreAlt className="bx bxs-calendar-check" />
-                <span className="text">
-                  {/* <h3>{products.length}</h3> */}
-                  <p>Products</p>
-                </span>
-              </li>
-              <li>
-                <FaShoppingCart className="bx bxs-calendar-check" />
-                <span className="text">
-                  <h3>1020</h3>
-                  <p>New Order</p>
-                </span>
-              </li>
-              <li>
                 <FaPeopleCarry className="bx bxs-group" />
                 <span className="text">
-                  <h3>2834</h3>
-                  <p>Visitors</p>
+                  <h3>{deliveredTransaction.length}</h3>
+                  <p>Delivered</p>
                 </span>
               </li>
               <li>
-                <FaChartLine className="bx bxs-dollar-circle" />
+                <MdPendingActions className="bx bxs-calendar-check" />
                 <span className="text">
-                  <h3>$2543</h3>
-                  <p>Total Sales</p>
+                  <h3>{processingTransaction.length}</h3>
+                  <p>Pending</p>
+                </span>
+              </li>
+              <li>
+                <GoIssueOpened className="bx bxs-calendar-check" />
+                <span className="text">
+                  <h3>{openTransaction.length}</h3>
+                  <p>Open</p>
+                </span>
+              </li>
+              <li>
+                <GiConfirmed className="bx bxs-dollar-circle" />
+                <span className="text">
+                  <h3>{allTransaction.length}</h3>
+                  <p>Total</p>
                 </span>
               </li>
             </ul>
@@ -120,6 +155,7 @@ function Transaction({ fetchProducts, products, sortTransaction }) {
               alignItems: "center",
               height: "60px",
               paddingTop: "50px",
+              overflow: "hidden",
             }}
           >
             <div className="head">
@@ -127,7 +163,7 @@ function Transaction({ fetchProducts, products, sortTransaction }) {
             </div>
             <div
               className="head"
-              onClick={() => fetchProducts()}
+              onClick={() => fetchTransactionStatus()}
               style={{
                 border: "2px solid #3c91e6",
                 padding: "0 5px",

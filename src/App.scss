@@ -598,8 +598,29 @@ body {
     padding: 15px 0;
     font-size: 15px;
   }
+  // #content .transaction-ul li {
+  //   width: 100% !important;
+  //   max-width: 500px;
+  // }
+}
+
+@media only screen and (min-width: 1020px) {
+  #content .transaction-ul li {
+    width: 45% !important;
+    max-width: 500px;
+  }
+  #content .user-ul li {
+    width: 45% !important;
+    max-width: 500px;
+  }
+}
+@media only screen and (min-width: 1250px) {
   #content .transaction-ul li {
     width: 23% !important;
+    max-width: 500px;
+  }
+  #content .user-ul li {
+    width: 32% !important;
     max-width: 500px;
   }
 }
@@ -727,6 +748,13 @@ $light-orange: #ffe0d3;
 }
 #content {
   .transaction-ul {
+    width: 100%;
+
+    li {
+      width: 100%;
+    }
+  }
+  .user-ul {
     width: 100%;
 
     li {

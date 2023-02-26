@@ -103,12 +103,12 @@ function Sidebar() {
               <span className="text">Notification</span>
             </a>
           </li>
-          <li ref={teamRef} onClick={(e) => addActive(e)}>
-            <a href="#" className="list-items">
+          <Link to="/customer" className="list-items">
+            <li ref={teamRef} onClick={(e) => addActive(e)}>
               <MdGroup className="list-icons" />
               <span className="text">Team</span>
-            </a>
-          </li>
+            </li>
+          </Link>
         </ul>
         <ul className="side-menu down">
           <li ref={settingRef} onClick={(e) => addActive(e)}>
