@@ -120,7 +120,12 @@ function App() {
               />
             }
           />
-          <Route path="/customer" element={<CustomersData users={users} />} />
+          <Route
+            path="/customer"
+            element={
+              <CustomersData users={users} fetchProducts={fetchProducts} />
+            }
+          />
         </Routes>
       </Router>
     </div>

@@ -1,6 +1,7 @@
 import StoreItems from "../Components/StoreItems";
 import React, { useRef, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
 
@@ -10,7 +11,7 @@ import { MdPendingActions } from "react-icons/md";
 import { GrUserWorker, GrUserAdmin } from "react-icons/gr";
 import { FaEdit, FaUsers } from "react-icons/fa";
 
-function CustomersData({ users }) {
+function CustomersData({ users, fetchProducts }) {
   const [client, setClient] = useState([]);
   const [staff, setStaff] = useState([]);
   const [admin, setAdmin] = useState([]);
@@ -23,7 +24,7 @@ function CustomersData({ users }) {
         setClient(data.client);
         setStaff(data.staff);
         setAdmin(data.admin);
-        console.log(admin.length);
+        fetchProducts();
       })
       .catch((error) => {
         throw Error(error);
@@ -179,7 +180,9 @@ function CustomersData({ users }) {
                 <UserTable
                   key={user._id}
                   {...user}
-                  // fetchProducts={fetchProducts}
+                  users={users}
+                  fetchProducts={fetchProducts}
+                  filterUsers={filterUsers}
                 />
               ))}
             </table>
@@ -192,7 +195,45 @@ function CustomersData({ users }) {
 
 export default CustomersData;
 
-function UserTable({ _id, name, email, position, verified }) {
+function UserTable({
+  _id,
+  name,
+  email,
+  position,
+  verified,
+  users,
+  fetchProducts,
+  filterUsers,
+}) {
+  const save = (e) => {
+    console.log(_id);
+  };
+
+  // UPDATE TRANSACTION STATUS
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    const productDetails = { ...users, position: data.position };
+    console.log(productDetails);
+    axios
+      .patch(
+        `http://localhost:1234/api/v1/userverification/updateuser/${_id}`,
+        productDetails
+      )
+      .then((resp) => {
+        fetchProducts();
+        filterUsers();
+        alert("Position has been updataed");
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
+  };
   return (
     <tbody style={{ color: "black" }}>
       <tr>
@@ -200,25 +241,37 @@ function UserTable({ _id, name, email, position, verified }) {
           <p>{name}</p>
         </td>
         <td>{email}</td>
-        <td>{position}</td>
         <td>{verified ? "True" : "False"}</td>
-        <td
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            fontSize: "20px",
-          }}
-        >
-          <Link to={`/productedit/${_id}`}>
-            <FaEdit
+        <td>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <select
+              {...register("position", { required: true })}
               style={{
-                cursor: "pointer",
-                color: "#3c91e6",
-                margin: "0 12px",
+                backgroundColor: (() => {
+                  switch (position) {
+                    case "client":
+                      return "#db504a";
+                    case "staff":
+                      return "#ffce26";
+                    case "owner":
+                      return "#3d91e6";
+                    default:
+                      return "#3d91e6";
+                  }
+                })(),
+                color: "white",
+                padding: "0 5px",
+                borderRadius: "5px",
+                fontSize: "12px",
               }}
-            />
-          </Link>{" "}
+            >
+              <option value={position}>{position}</option>
+              <option value="client">Client</option>
+              <option value="staff">Staff</option>
+              <option value="admin">Admin</option>
+            </select>
+            <input type="submit" className="submit-btn" />
+          </form>
         </td>
       </tr>
     </tbody>
