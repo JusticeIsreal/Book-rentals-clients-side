@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link ,useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { HiRefresh } from "react-icons/hi";
+import Loader from "../Loader";
 // ICONS
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 function StoreItems({ fetchProducts, products }) {
@@ -34,35 +35,38 @@ function StoreItems({ fetchProducts, products }) {
           </div>
         </div>
         <div className="order" style={{ position: "relative" }}>
-          <table
-            className="table"
-            style={{
-              width: "100%",
-              minWidth: "500px",
-            }}
-          >
-            <thead>
-              <tr>
-                <th>Img</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Slash</th>
-                <th>ISBN</th>
-                <th>Cat</th>
-                <th>Class</th>
-                <th>Desc</th>
-                <th>Edit</th>
-              </tr>
-            </thead>
-
-            {products.map((product) => (
-              <StoreItemsIndividual
-                key={product._id}
-                {...product}
-                fetchProducts={fetchProducts}
-              />
-            ))}
-          </table>
+          {products.length >= 1 ? (
+            <table
+              className="table"
+              style={{
+                width: "100%",
+                minWidth: "500px",
+              }}
+            >
+              <thead>
+                <tr>
+                  <th>Img</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Slash</th>
+                  <th>ISBN</th>
+                  <th>Cat</th>
+                  <th>Class</th>
+                  <th>Desc</th>
+                  <th>Edit</th>
+                </tr>
+              </thead>
+              {products.map((product) => (
+                <StoreItemsIndividual
+                  key={product._id}
+                  {...product}
+                  fetchProducts={fetchProducts}
+                />
+              ))}
+            </table>
+          ) : (
+            <Loader />
+          )}
         </div>
       </div>
     </div>

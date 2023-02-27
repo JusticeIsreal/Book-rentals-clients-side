@@ -1,25 +1,33 @@
-import StoreItems from "../Components/StoreItems";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import Topbar from "../../Components/AdminPageComponents/Topbar";
+import Sidebar from "../../Components/AdminPageComponents/Sidebar";
+import Loader from "../../Components/Loader";
+import { useParams, useNavigate } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
+
 function EditProduct({ products }) {
   // FETCH SINGLE ITEM
   const { _id } = useParams();
-  const [item, setItem] = useState([]);
+  const [item, setItem] = useState(null);
 
+  // FETCH SINGLE PRODUCT BY ID VIA API ENDPOINT
   const singleProduct = () => {
     axios
       .get(`http://localhost:1234/api/v1/products/findoneproduct/${_id}`)
       .then((resp) => {
         setItem(resp.data.Singleproduct);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        throw new Error(error);
+      });
   };
   useEffect(() => {
     singleProduct();
   }, []);
+
+  // useFORM CONGIF
   const {
     register,
     handleSubmit,
@@ -34,7 +42,6 @@ function EditProduct({ products }) {
 
   const uploadImage = async (e) => {
     const file = e.target.files[0];
-    console.log(e.target.files[0]);
     setPreviewImg(file);
     const base64 = await convertBase64(file);
     setImageBase64(base64);
@@ -49,6 +56,7 @@ function EditProduct({ products }) {
     };
   };
 
+  // CONVERTING BASE64 IMAGE STRING TO IMAGE FILE
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
@@ -63,8 +71,7 @@ function EditProduct({ products }) {
     });
   };
 
-  // POST PRODUCT
-
+  // UPDATE SINGLE PRODUCT
   const onSubmit = (data) => {
     const productDetails = { ...data, productimage: imageBase64 };
 
@@ -86,6 +93,9 @@ function EditProduct({ products }) {
   const history = useNavigate();
   return (
     <div>
+      {" "}
+      <Topbar />
+      <Sidebar />
       <div className="store-main-con">
         <div id="content">
           <main>
@@ -123,71 +133,76 @@ function EditProduct({ products }) {
                 onClick={() => setFormShow(!formShow)}
               >
                 <a href="#updateform" style={{ color: "white" }}>
-                  {" "}
                   <b className="bx bxs-cloud-download"> + </b>
                   <span className="text">Update Product</span>
                 </a>
               </div>
             </div>
-            <div style={{ display: "flex", flexWrap: "wrap" }}>
-              <div style={{ width: "300px", margin: "10px" }}>
-                <img
-                  src={item.productimage}
-                  alt=""
-                  style={{ objectFit: "contain", width: "300px" }}
-                />
+
+            {item ? (
+              <div style={{ display: "flex", flexWrap: "wrap" }}>
+                <div style={{ width: "300px", margin: "10px" }}>
+                  <img
+                    src={item.productimage}
+                    alt=""
+                    style={{ objectFit: "contain", width: "300px" }}
+                  />
+                </div>
+                <div
+                  style={{
+                    width: "100%",
+                    maxWidth: "600px",
+                    margin: "10px",
+                  }}
+                >
+                  <p>
+                    <span style={{ fontWeight: "bolder", color: "#3d91e6" }}>
+                      Product Name :
+                    </span>{" "}
+                    {item.productname}
+                  </p>
+                  <p>
+                    <span style={{ fontWeight: "bolder", color: "#3d91e6" }}>
+                      Price :
+                    </span>{" "}
+                    {item.productprice}
+                  </p>
+                  <p>
+                    <span style={{ fontWeight: "bolder", color: "#3d91e6" }}>
+                      Old Price :
+                    </span>{" "}
+                    {item.productoldprice}
+                  </p>
+                  <p>
+                    <span style={{ fontWeight: "bolder", color: "#3d91e6" }}>
+                      Number :
+                    </span>{" "}
+                    {item.productnumber}
+                  </p>
+                  <p>
+                    <span style={{ fontWeight: "bolder", color: "#3d91e6" }}>
+                      Category :
+                    </span>{" "}
+                    {item.productcategory}
+                  </p>
+                  <p>
+                    <span style={{ fontWeight: "bolder", color: "#3d91e6" }}>
+                      Class :
+                    </span>{" "}
+                    {item.productclass}
+                  </p>
+                  <p>
+                    <span style={{ fontWeight: "bolder", color: "#3d91e6" }}>
+                      Description :
+                    </span>{" "}
+                    {item.productdescription}
+                  </p>
+                </div>
               </div>
-              <div
-                style={{
-                  width: "100%",
-                  maxWidth: "600px",
-                  margin: "10px",
-                }}
-              >
-                <p>
-                  <span style={{ fontWeight: "bolder", color: "#3d91e6" }}>
-                    Product Name :
-                  </span>{" "}
-                  {item.productname}
-                </p>
-                <p>
-                  <span style={{ fontWeight: "bolder", color: "#3d91e6" }}>
-                    Price :
-                  </span>{" "}
-                  {item.productprice}
-                </p>
-                <p>
-                  <span style={{ fontWeight: "bolder", color: "#3d91e6" }}>
-                    Old Price :
-                  </span>{" "}
-                  {item.productoldprice}
-                </p>
-                <p>
-                  <span style={{ fontWeight: "bolder", color: "#3d91e6" }}>
-                    Number :
-                  </span>{" "}
-                  {item.productnumber}
-                </p>
-                <p>
-                  <span style={{ fontWeight: "bolder", color: "#3d91e6" }}>
-                    Category :
-                  </span>{" "}
-                  {item.productcategory}
-                </p>
-                <p>
-                  <span style={{ fontWeight: "bolder", color: "#3d91e6" }}>
-                    Class :
-                  </span>{" "}
-                  {item.productclass}
-                </p>
-                <p>
-                  <span style={{ fontWeight: "bolder", color: "#3d91e6" }}>
-                    Description :
-                  </span>{" "}
-                  {item.productdescription}
-                </p>
-              </div>
-            </div>
+            ) : (
+              <Loader />
+            )}
+
             {formShow && (
               <div className="store-form-container" id="updateform">
                 <form onSubmit={handleSubmit(onSubmit)}>

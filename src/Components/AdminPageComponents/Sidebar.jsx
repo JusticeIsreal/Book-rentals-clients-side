@@ -8,7 +8,7 @@ import { MdDashboard, MdGroup, MdSettings } from "react-icons/md";
 import { RiMessage2Fill } from "react-icons/ri";
 import { BiLogOutCircle } from "react-icons/bi";
 import { FaStore, FaMoneyCheckAlt } from "react-icons/fa";
-import AdminDashboard from "../Pages/AdminDashboard";
+import AdminDashboard from "../../Pages/Adminpage/AdminDashboard";
 function Sidebar() {
   const dashboardRef = useRef();
   const transactionRef = useRef();
@@ -27,8 +27,7 @@ function Sidebar() {
     let setting = settingRef.current;
     let logout = logoutRef.current;
     // console.log(thislist);
-    console.log(e.target.innerText);
-    console.log(store);
+
     if (e.target.innerHTML === "My Store") {
       store.className = "active";
     } else {
@@ -49,7 +48,7 @@ function Sidebar() {
     } else {
       message.className = "";
     }
-    if (e.target.innerHTML === "Team") {
+    if (e.target.innerHTML === "Users") {
       team.className = "active";
     } else {
       team.className = "";
@@ -74,11 +73,7 @@ function Sidebar() {
           <span className="text">TOP MINDS</span>
         </a>
         <ul className="side-menu top">
-          <li
-            ref={dashboardRef}
-            className="active"
-            onClick={(e) => addActive(e)}
-          >
+          <li ref={dashboardRef} onClick={(e) => addActive(e)}>
             <Link className="list-items" to="/admindashboard">
               <MdDashboard className="list-icons" />
               <span className="text">Dashboard</span>
@@ -103,12 +98,13 @@ function Sidebar() {
               <span className="text">Notification</span>
             </a>
           </li>
-          <Link to="/customer" className="list-items">
-            <li ref={teamRef} onClick={(e) => addActive(e)}>
+
+          <li ref={teamRef} onClick={(e) => addActive(e)}>
+            <Link to="/customer" className="list-items">
               <MdGroup className="list-icons" />
-              <span className="text">Team</span>
-            </li>
-          </Link>
+              <span className="text">Users</span>
+            </Link>
+          </li>
         </ul>
         <ul className="side-menu down">
           <li ref={settingRef} onClick={(e) => addActive(e)}>

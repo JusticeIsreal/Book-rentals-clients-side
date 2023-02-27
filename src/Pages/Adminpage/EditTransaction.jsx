@@ -1,7 +1,10 @@
-import StoreItems from "../Components/StoreItems";
+import StoreItems from "../../Components/AdminPageComponents/StoreItems";
 import React, { useRef, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import Topbar from "../../Components/AdminPageComponents/Topbar";
+import Sidebar from "../../Components/AdminPageComponents/Sidebar";
+
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { MdArrowBackIos } from "react-icons/md";
 function EditTransaction({ products, fetchProducts }) {
@@ -11,6 +14,7 @@ function EditTransaction({ products, fetchProducts }) {
   const [singleTransaction, setSingleTransaction] = useState([]);
   const [singleTransactionDetails, setSingleTransactionDetails] = useState([]);
 
+  // FECT SINGLE TRANSACTION DETAILS
   const singleProduct = () => {
     axios
       .get(
@@ -35,9 +39,10 @@ function EditTransaction({ products, fetchProducts }) {
     formState: { errors },
   } = useForm();
 
+  // SUBMIT UPDATE
   const onSubmit = (data) => {
     const productDetails = { ...singleTransactionDetails, status: data.status };
-    console.log(productDetails);
+
     axios
       .patch(
         `http://localhost:1234/api/v1/transaction/updatetransaction/${_id}`,
@@ -46,19 +51,20 @@ function EditTransaction({ products, fetchProducts }) {
       .then((resp) => {
         singleProduct();
         fetchProducts();
-        setFormShow(false);
+
         alert("Status has been updataed");
         window.location.href = "/transaction";
       })
       .catch((error) => console.log(error));
   };
 
-  // display form on and of
-  const [formShow, setFormShow] = useState(false);
   // NAVIGATE PAGE BACK
   const history = useNavigate();
   return (
     <div>
+      {" "}
+      <Topbar />
+      <Sidebar />
       <div className="store-main-con">
         <div id="content">
           <main>

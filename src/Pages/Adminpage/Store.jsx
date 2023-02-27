@@ -1,8 +1,11 @@
-import StoreItems from "../Components/StoreItems";
-import React, { useRef, useState } from "react";
+import StoreItems from "../../Components/AdminPageComponents/StoreItems";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Topbar from "../../Components/AdminPageComponents/Topbar";
+import Sidebar from "../../Components/AdminPageComponents/Sidebar";
+
 import { MdArrowBackIos } from "react-icons/md";
 function Store({ fetchProducts, products }) {
   // useform config
@@ -18,9 +21,9 @@ function Store({ fetchProducts, products }) {
   // uploadImage
   const [imageBase64, setImageBase64] = useState("");
 
+  // image preview before uploading
   const uploadImage = async (e) => {
     const file = e.target.files[0];
-    console.log(e.target.files[0]);
     setPreviewImg(file);
     const base64 = await convertBase64(file);
     setImageBase64(base64);
@@ -35,6 +38,7 @@ function Store({ fetchProducts, products }) {
     };
   };
 
+  // base 64 conversion
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
@@ -54,7 +58,7 @@ function Store({ fetchProducts, products }) {
 
   const onSubmit = (data, e) => {
     const productDetails = { ...data, productimage: imageBase64 };
-    console.log(productDetails);
+
     axios
       .post(postProductAPI, productDetails)
       .then((resp) => {
@@ -63,7 +67,9 @@ function Store({ fetchProducts, products }) {
         setImageBase64("");
         setPreviewImg(null);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        throw new Error(error);
+      });
   };
 
   // display form on and of
@@ -72,6 +78,8 @@ function Store({ fetchProducts, products }) {
   const history = useNavigate();
   return (
     <div className="store-main-con">
+      <Topbar />
+      <Sidebar />
       <div id="content">
         <main>
           <div className="head-title">

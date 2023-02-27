@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Topbar from "../../Components/AdminPageComponents/Topbar";
+import Sidebar from "../../Components/AdminPageComponents/Sidebar";
+import Loader from "../../Components/Loader";
 import { HiRefresh, HiCloudDownload } from "react-icons/hi";
 import { MdArrowBackIos, MdPendingActions } from "react-icons/md";
 // ICONS
@@ -10,7 +13,7 @@ import { GiConfirmed } from "react-icons/gi";
 import { GoIssueOpened } from "react-icons/go";
 
 import { FaShoppingCart, FaPeopleCarry, FaChartLine } from "react-icons/fa";
-function Transaction({ fetchProducts, products, sortTransaction }) {
+function Transaction({ fetchProducts, sortTransaction, transaction }) {
   // Navgat back
   const history = useNavigate();
 
@@ -28,7 +31,6 @@ function Transaction({ fetchProducts, products, sortTransaction }) {
         setDeliveredTransaction(data.Delivered);
         setProccessingTransaction(data.Processing);
         setOpenTransaction(data.Open);
-        // console.log(data);
       })
       .catch((error) => {
         throw Error(error);
@@ -37,7 +39,6 @@ function Transaction({ fetchProducts, products, sortTransaction }) {
       .then((res) => res.json())
       .then((data) => {
         setAllTransaction(data.data);
-        // console.log(data.data);
       })
       .catch((error) => {
         throw Error(error);
@@ -49,6 +50,9 @@ function Transaction({ fetchProducts, products, sortTransaction }) {
   }, []);
   return (
     <div id="content">
+      {" "}
+      <Topbar />
+      <Sidebar />
       <main>
         <div
           className="head-title"
@@ -175,33 +179,37 @@ function Transaction({ fetchProducts, products, sortTransaction }) {
             </div>
           </div>
           <div className="order" style={{ position: "relative" }}>
-            <table
-              className="table"
-              style={{
-                width: "100%",
-                minWidth: "500px",
-              }}
-            >
-              <thead>
-                <tr>
-                  <th>User</th>
-                  <th>Address</th>
-                  <th>Product</th>
-                  <th>Amount</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>payment</th>
-                </tr>
-              </thead>
+            {transaction.length >= 1 ? (
+              <table
+                className="table"
+                style={{
+                  width: "100%",
+                  minWidth: "500px",
+                }}
+              >
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Address</th>
+                    <th>Product</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>payment</th>
+                  </tr>
+                </thead>
 
-              {sortTransaction.map((transaction) => (
-                <StoreTransaction
-                  key={transaction._id}
-                  {...transaction}
-                  fetchProducts={fetchProducts}
-                />
-              ))}
-            </table>
+                {sortTransaction.map((transaction) => (
+                  <StoreTransaction
+                    key={transaction._id}
+                    {...transaction}
+                    fetchProducts={fetchProducts}
+                  />
+                ))}
+              </table>
+            ) : (
+              <Loader />
+            )}
           </div>
         </div>
       </main>

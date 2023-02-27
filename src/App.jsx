@@ -6,15 +6,18 @@ import { Link } from "react-router-dom";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // COMPONETS
-import Topbar from "./Components/Topbar";
-import Sidebar from "./Components/Sidebar";
-import Store from "./Pages/Store";
-import EditProduct from "./Pages/EditProduct";
-import Transaction from "./Pages/Transaction";
-import EditTransaction from "./Pages/EditTransaction";
-import CustomersData from "./Pages/CustomersData";
-// PAGES
-import AdminDashboard from "./Pages/AdminDashboard";
+import Topbar from "./Components/AdminPageComponents/Topbar";
+import Sidebar from "./Components/AdminPageComponents/Sidebar";
+
+//ADMIN PAGES
+import Store from "./Pages/Adminpage/Store";
+import AdminDashboard from "./Pages/Adminpage/AdminDashboard";
+import EditProduct from "./Pages/Adminpage/EditProduct";
+import Transaction from "./Pages/Adminpage/Transaction";
+import EditTransaction from "./Pages/Adminpage/EditTransaction";
+import CustomersData from "./Pages/Adminpage/CustomersData";
+// CLIENT PAGES
+import Sample from "./Pages/ClientPage/Sample";
 function App() {
   const [products, setProducts] = useState([]);
   const [transaction, setTransaction] = useState([]);
@@ -83,12 +86,18 @@ function App() {
   return (
     <div>
       <Router>
-        <Topbar />
-        <Sidebar />
         <Routes>
+          {/* ADMIN PAGE ROUTES */}
           <Route
             path="/admindashboard"
-            element={<AdminDashboard products={products} />}
+            element={
+              <AdminDashboard
+                products={products}
+                transaction={transaction}
+                users={users}
+                sortTransaction={sortTransaction}
+              />
+            }
           />
           <Route
             path="/store"
@@ -107,6 +116,7 @@ function App() {
                 fetchProducts={fetchProducts}
                 products={products}
                 sortTransaction={sortTransaction}
+                transaction={transaction}
               />
             }
           />
@@ -126,6 +136,10 @@ function App() {
               <CustomersData users={users} fetchProducts={fetchProducts} />
             }
           />
+          {/* ADMIN PAGE ROUTE ENDS */}
+
+          {/* CLIENT PAGE STARTS */}
+          <Route path="/sample" element={<Sample />} />
         </Routes>
       </Router>
     </div>
