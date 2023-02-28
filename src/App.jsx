@@ -139,7 +139,7 @@ function App() {
           {/* ADMIN PAGE ROUTE ENDS */}
 
           {/* CLIENT PAGE STARTS */}
-          <Route path="/sample" element={<Sample />} />
+          <Route path="/sample" element={<Sample products={products} />} />
         </Routes>
       </Router>
     </div>

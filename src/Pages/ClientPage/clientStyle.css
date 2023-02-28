@@ -18,9 +18,7 @@
   /* set the background color of the track */
 }
 
-*::-webkit-scrollbar-thumb {
-  /* round the corners of the thumb */
-}
+
 .heading {
   text-align: center;
   margin-bottom: 2rem;
@@ -601,38 +599,25 @@
   }
 }
 #featured {
-  /* border: 2px solid rgb(0, 38, 255); */
   margin-top: 50px;
-  /* width: 100vw; */
 }
 #featured .swiper {
-  /* border: 2px solid green; */
   position: relative;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  /* overflow-x: scroll; */
-  /* height: 430px; */
   overflow-y: hidden;
 }
 
 #featured .swiper .box {
-  /* border: 2px solid red; */
-  /* width: 300px; */
   position: relative;
-  /* width: 60px; */
   margin: 5px;
-  /* border: 2px solid red; */
-  /* height: 100%; */
-  /* height: 410px; */
 }
 @media (min-width: 768px) {
   #featured {
     margin-top: 50px;
     height: auto;
-
-    /* width: 100vw; */
   }
   #featured .swiper {
     position: relative;

@@ -1,136 +1,199 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
+import Loader from "../Loader";
 import { FaEye } from "react-icons/fa";
-function products() {
+function products({ newArrival, romance, scifi, motivation, products }) {
+  const romanceRef = useRef();
+  const scifiRef = useRef();
+  const motivationRef = useRef();
+  const [allProducts, setAllProducts] = useState([]);
+  const [firstRenderProduct, setFirstRenderProduct] = useState(true);
+  const filterByCategory = (e) => {
+    let category = e.target.innerHTML;
+    setAllProducts(products);
+    if (category === "All") {
+      setAllProducts(products);
+      setFirstRenderProduct(false);
+    } else if (category === "Romance") {
+      setAllProducts(romance);
+      setFirstRenderProduct(false);
+    } else if (category === "Scifi") {
+      setAllProducts(scifi);
+      setFirstRenderProduct(false);
+    } else if (category === "Motivation") {
+      setAllProducts(motivation);
+      setFirstRenderProduct(false);
+    } else {
+      setAllProducts(products);
+    }
+  };
+
   return (
     <div>
-      {" "}
       <section className="featured" id="featured">
         <h1 className="heading">
-          <span style={{ background: "transparent", border: "none" }}>
-            Recommended books
+          <span
+            style={{
+              background: "transparent",
+              border: "none",
+              fontSize: "20px",
+            }}
+          >
+            New Arrivals
           </span>{" "}
         </h1>
 
         <div className="swiper featured-slider">
-          <div className="swiper-slide box">
-            <div className="image">
-              <img src="../../../public/images/book-1.png" alt="" />
-            </div>
-            <div className="content">
-              <h3>The Art City</h3>
-              <div className="price">
-                $10.99 <span>$20.99</span>
-              </div>
-            </div>
-          </div>
+          {newArrival.map((product) => {
+            return <SingleNewArrival key={product._id} {...product} />;
+          })}
+        </div>
 
-          <div className="swiper-slide box">
-            <div className="image">
-              <img src="../../../public/images/book-2.png" alt="" />
+        {/*ALL PRODUCTS  */}
+        <h1 className="heading" style={{ marginTop: "50px" }}>
+          <span
+            style={{
+              background: "transparent",
+              border: "none",
+              fontSize: "50px",
+            }}
+          >
+            Shelf
+          </span>
+        </h1>
+        <div
+          style={{
+            margin: "0 auto",
+            marginTop: "-20px",
+          }}
+        >
+          <form
+            style={{
+              margin: "0 auto",
+              width: "280px",
+            }}
+          >
+            <input
+              type="text"
+              style={{
+                margin: "5px",
+                width: "100%",
+                height: "100%",
+                border: "none",
+                outline: "none",
+                padding: "5px",
+                border: "1px solid gray",
+              }}
+            />
+            <div
+              style={{
+                width: "100px",
+                margin: "0 auto",
+              }}
+            >
+              <button
+                style={{
+                  width: "100%",
+                }}
+              >
+                Search
+              </button>
             </div>
-            <div className="content">
-              <h3>Give Thanks in Everything</h3>
-              <div className="price">
-                $13.99 <span>$20.99</span>
-              </div>
-            </div>
+          </form>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "350px",
+            height: "30px",
+            margin: "0 auto",
+            marginTop: "50px",
+          }}
+        >
+          <div
+            onClick={(e) => filterByCategory(e)}
+            style={{
+              fontSize: "17px",
+              fontWeight: "600",
+              color: "white",
+              background: "#3d91e6",
+              height: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "0 10px",
+            }}
+          >
+            All
           </div>
-
-          <div className="swiper-slide box">
-            <div className="image">
-              <img src="../../../public/images/book-3.png" alt="" />
-            </div>
-            <div className="content">
-              <h3>Your name</h3>
-              <div className="price">
-                $12.99 <span>$20.99</span>
-              </div>
-            </div>
+          <div
+            onClick={(e) => filterByCategory(e)}
+            ref={scifiRef}
+            style={{
+              fontSize: "17px",
+              fontWeight: "600",
+              color: "white",
+              background: "#3d91e6",
+              height: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "0 10px",
+            }}
+          >
+            Scifi
           </div>
-
-          <div className="swiper-slide box">
-            <div className="image">
-              <img src="../../../public/images/book-4.png" alt="" />
-            </div>
-            <div className="content">
-              <h3>Your title goes here</h3>
-              <div className="price">
-                $15.99 <span>$20.99</span>
-              </div>
-            </div>
+          <div
+            onClick={(e) => filterByCategory(e)}
+            ref={motivationRef}
+            style={{
+              fontSize: "17px",
+              fontWeight: "600",
+              color: "white",
+              background: "#3d91e6",
+              height: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "0 10px",
+            }}
+          >
+            Motivation
           </div>
-
-          <div className="swiper-slide box">
-            <div className="image">
-              <img src="../../../public/images/book-5.png" alt="" />
-            </div>
-            <div className="content">
-              <h3>Listen Music</h3>
-              <div className="price">
-                $14.99 <span>$20.99</span>
-              </div>
-            </div>
+          <div
+            onClick={(e) => filterByCategory(e)}
+            ref={romanceRef}
+            style={{
+              fontSize: "17px",
+              fontWeight: "600",
+              color: "white",
+              background: "#3d91e6",
+              height: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "0 10px",
+            }}
+          >
+            Romance
           </div>
-
-          <div className="swiper-slide box">
-            <div className="image">
-              <img src="../../../public/images/book-6.png" alt="" />
-            </div>
-            <div className="content">
-              <h3>Sample Text</h3>
-              <div className="price">
-                $13.99 <span>$20.99</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="swiper-slide box">
-            <div className="image">
-              <img src="../../../public/images/book-7.png" alt="" />
-            </div>
-            <div className="content">
-              <h3>Beach lives matters</h3>
-              <div className="price">
-                $15.99 <span>$20.99</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="swiper-slide box">
-            <div className="image">
-              <img src="../../../public/images/book-8.png" alt="" />
-            </div>
-            <div className="content">
-              <h3>Black history month</h3>
-              <div className="price">
-                $15.99 <span>$20.99</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="swiper-slide box">
-            <div className="image">
-              <img src="../../../public/images/book-9.png" alt="" />
-            </div>
-            <div className="content">
-              <h3>Love</h3>
-              <div className="price">
-                $12.99 <span>$20.99</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="swiper-slide box">
-            <div className="image">
-              <img src="../../../public/images/book-10.png" alt="" />
-            </div>
-            <div className="content">
-              <h3>Retro</h3>
-              <div className="price">
-                $15.99 <span>$20.99</span>
-              </div>
-            </div>
-          </div>
+        </div>
+        <div className="swiper featured-slider">
+          {firstRenderProduct ? (
+            <>
+              {products.map((product) => (
+                <SingleProduct key={product.key} {...product} />
+              ))}
+            </>
+          ) : (
+            <>
+              {allProducts.map((product) => (
+                <SingleProduct key={product.key} {...product} />
+              ))}
+            </>
+          )}
         </div>
       </section>
     </div>
@@ -139,187 +202,51 @@ function products() {
 
 export default products;
 
-// <section className="featured" id="featured">
-//   <h1 className="heading">
-//     <span>Recommended books</span>{" "}
-//   </h1>
+function SingleNewArrival({
+  _id,
+  productimage,
+  productname,
+  productprice,
+  productoldprice,
+}) {
+  return (
+    <div>
+      <div className="swiper-slide box">
+        <div className="image">
+          <img src={productimage} alt="" />
+        </div>
+        <div className="content">
+          <h3>{productname}</h3>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-//   <div className="swiper featured-slider">
-//     <div className="swiper-slide box">
-//       {/* <div className="icons">
-//           <FaEye className="fas fa-eye" />
-//         </div> */}
-//       <div className="image">
-//         <img src="../../../public/images/book-1.png" alt="" />
-//       </div>
-//       <div className="content">
-//         <h3>The Art City</h3>
-//         <div className="price">
-//           $10.99 <span>$20.99</span>
-//         </div>
-//       </div>
-//     </div>
-
-//     <div className="swiper-slide box">
-//       <div className="icons">
-//         <FaEye className="fas fa-eye" />
-//       </div>
-//       <div className="image">
-//         <img src="../../../public/images/book-2.png" alt="" />
-//       </div>
-//       <div className="content">
-//         <h3>Give Thanks in Everything</h3>
-//         <div className="price">
-//           $13.99 <span>$20.99</span>
-//         </div>
-//         <a href="#" className="btn">
-//           Add to cart
-//         </a>
-//       </div>
-//     </div>
-
-//     <div className="swiper-slide box">
-//       <div className="icons">
-//         <FaEye className="fas fa-eye" />
-//       </div>
-//       <div className="image">
-//         <img src="../../../public/images/book-3.png" alt="" />
-//       </div>
-//       <div className="content">
-//         <h3>Your name</h3>
-//         <div className="price">
-//           $12.99 <span>$20.99</span>
-//         </div>
-//         <a href="#" className="btn">
-//           Add to cart
-//         </a>
-//       </div>
-//     </div>
-
-//     <div className="swiper-slide box">
-//       <div className="icons">
-//         <FaEye className="fas fa-eye" />
-//       </div>
-//       <div className="image">
-//         <img src="../../../public/images/book-4.png" alt="" />
-//       </div>
-//       <div className="content">
-//         <h3>Your title goes here</h3>
-//         <div className="price">
-//           $15.99 <span>$20.99</span>
-//         </div>
-//         <a href="#" className="btn">
-//           Add to cart
-//         </a>
-//       </div>
-//     </div>
-
-//     <div className="swiper-slide box">
-//       <div className="icons">
-//         <FaEye className="fas fa-eye" />
-//       </div>
-//       <div className="image">
-//         <img src="../../../public/images/book-5.png" alt="" />
-//       </div>
-//       <div className="content">
-//         <h3>Listen Music</h3>
-//         <div className="price">
-//           $14.99 <span>$20.99</span>
-//         </div>
-//         <a href="#" className="btn">
-//           Add to cart
-//         </a>
-//       </div>
-//     </div>
-
-//     <div className="swiper-slide box">
-//       <div className="icons">
-//         <FaEye className="fas fa-eye" />
-//       </div>
-//       <div className="image">
-//         <img src="../../../public/images/book-6.png" alt="" />
-//       </div>
-//       <div className="content">
-//         <h3>Sample Text</h3>
-//         <div className="price">
-//           $13.99 <span>$20.99</span>
-//         </div>
-//         <a href="#" className="btn">
-//           Add to cart
-//         </a>
-//       </div>
-//     </div>
-
-//     <div className="swiper-slide box">
-//       <div className="icons">
-//         <FaEye className="fas fa-eye" />
-//       </div>
-//       <div className="image">
-//         <img src="../../../public/images/book-7.png" alt="" />
-//       </div>
-//       <div className="content">
-//         <h3>Beach lives matters</h3>
-//         <div className="price">
-//           $15.99 <span>$20.99</span>
-//         </div>
-//         <a href="#" className="btn">
-//           Add to cart
-//         </a>
-//       </div>
-//     </div>
-
-//     <div className="swiper-slide box">
-//       <div className="icons">
-//         <FaEye className="fas fa-eye" />
-//       </div>
-//       <div className="image">
-//         <img src="../../../public/images/book-8.png" alt="" />
-//       </div>
-//       <div className="content">
-//         <h3>Black history month</h3>
-//         <div className="price">
-//           $15.99 <span>$20.99</span>
-//         </div>
-//         <a href="#" className="btn">
-//           Add to cart
-//         </a>
-//       </div>
-//     </div>
-
-//     <div className="swiper-slide box">
-//       <div className="icons">
-//         <FaEye className="fas fa-eye" />
-//       </div>
-//       <div className="image">
-//         <img src="../../../public/images/book-9.png" alt="" />
-//       </div>
-//       <div className="content">
-//         <h3>Love</h3>
-//         <div className="price">
-//           $12.99 <span>$20.99</span>
-//         </div>
-//         <a href="#" className="btn">
-//           Add to cart
-//         </a>
-//       </div>
-//     </div>
-
-//     <div className="swiper-slide box">
-//       <div className="icons">
-//         <FaEye className="fas fa-eye" />
-//       </div>
-//       <div className="image">
-//         <img src="../../../public/images/book-10.png" alt="" />
-//       </div>
-//       <div className="content">
-//         <h3>Retro</h3>
-//         <div className="price">
-//           $15.99 <span>$20.99</span>
-//         </div>
-//         <a href="#" className="btn">
-//           add to cart
-//         </a>
-//       </div>
-//     </div>
-//   </div>
-// </section>;
+function SingleProduct({
+  _id,
+  productimage,
+  productname,
+  productprice,
+  productoldprice,
+}) {
+  return (
+    <div>
+      <div className="swiper-slide box">
+        <div className="image">
+          <img src={productimage} alt="" />
+        </div>
+        <div className="content">
+          <h3>{productname}</h3>
+          <div className="price">
+            {productprice}
+            <span>{productoldprice}</span>
+          </div>
+          <a href="" className="btn">
+            Add to cart
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
