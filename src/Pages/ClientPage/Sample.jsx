@@ -115,7 +115,6 @@ function Sample({ products }) {
           {/* 7 */}
           <NewsLetter />
           {/* 8 */}
-          <NewArrivals />
           {/* 8 */}
           <Promo />
           {/* 9 */}

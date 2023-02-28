@@ -180,20 +180,23 @@ function products({ newArrival, romance, scifi, motivation, products }) {
             Romance
           </div>
         </div>
-        <div className="swiper featured-slider">
+        <div className="swiper featured-slider main-products-list">
           {firstRenderProduct ? (
             <>
               {products.map((product) => (
-                <SingleProduct key={product.key} {...product} />
+                <SingleProduct key={product._id} {...product} />
               ))}
             </>
           ) : (
             <>
               {allProducts.map((product) => (
-                <SingleProduct key={product.key} {...product} />
+                <SingleProduct key={product._id} {...product} />
               ))}
             </>
           )}
+        </div>
+        <div className="see-more-products">
+          <p>See more</p>
         </div>
       </section>
     </div>
@@ -206,8 +209,6 @@ function SingleNewArrival({
   _id,
   productimage,
   productname,
-  productprice,
-  productoldprice,
 }) {
   return (
     <div>
@@ -231,7 +232,7 @@ function SingleProduct({
   productoldprice,
 }) {
   return (
-    <div>
+    <div className="products-single-con">
       <div className="swiper-slide box">
         <div className="image">
           <img src={productimage} alt="" />

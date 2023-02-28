@@ -221,7 +221,6 @@ function Store({ fetchProducts, products }) {
                   <option value="">Select</option>
                   <option value="promo">Promo</option>
                   <option value="newarrival">New</option>
-                  <option value="bestseller">Best-Seller</option>
                 </select>
                 {errors.productclass && (
                   <span

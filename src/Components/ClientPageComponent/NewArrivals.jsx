@@ -3,7 +3,6 @@ import React from "react";
 function NewArrivals() {
   return (
     <div>
-      {" "}
       <section className="arrivals" id="arrivals">
         <h1 className="heading">
           <span>New arrivals</span>{" "}

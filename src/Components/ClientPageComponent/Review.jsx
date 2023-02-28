@@ -58,7 +58,7 @@ function Review() {
               </div>
             </div>
             <div className="swiper-slide box">
-              <img src="../../../public/CSS/images/pic-4.png" alt="" />
+              {/* <img src="../../../public/CSS/images/pic-4.png" alt="" /> */}
               <h3>Tracy Ben</h3>
               <p>
                 So inspiring and nice novels i would like to read more, get more
