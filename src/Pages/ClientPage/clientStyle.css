@@ -335,20 +335,30 @@
   background: #f3f3f3;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   gap: 1.5rem;
+  height: 200px;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 5px;
 }
 
 .deal .content {
-  flex: 1 1 42rem;
+  width: 70%;
 }
 
 .deal .image {
-  flex: 1 1 42rem;
+  position: absolute;
+  right: 0;
+  top: -90px;
+  bottom: 0 !important;
+  height: 100%;
 }
 
 .deal .image img {
-  width: 100%;
+  width: 150px;
+  height: 200px;
 }
 
 .deal .content h3 {
@@ -362,13 +372,76 @@
   font-size: 4rem;
 }
 
-.deal .content p {
-  padding: 1rem 0;
-  color: var(--light-color);
-  font-size: 1.4rem;
-  line-height: 2;
-}
+@media (max-width: 300px) {
+  .deal .content {
+    width: 60%;
+    margin-top: -15px;
+  }
 
+  .deal .image img {
+    width: 115px;
+    height: 160px;
+  }
+
+  .deal .content h3 {
+    color: var(--green);
+    font-size: 15px;
+    padding-bottom: 0.5rem;
+  }
+
+  .deal .content h1 {
+    color: var(--black);
+    font-size: 29px;
+  }
+}
+@media (min-width: 768px) {
+  .deal {
+    height: 300px;
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 100vw;
+    max-width: 1500px;
+    padding: 10px;
+  }
+  .deal .content {
+    /* border: 2px solid rgb(0, 255, 34); */
+    width: 70%;
+    margin-top: 50px;
+  }
+
+  .deal .image {
+    /* border: 2px solid rgb(0, 255, 195); */
+    position: absolute;
+    right: 0;
+    top: -160px;
+    bottom: 0 !important;
+    /* height: 100%; */
+  }
+
+  .deal .image img {
+    width: 350px;
+    height: 400px;
+    /* border: 2px solid rgb(0, 68, 255); */
+  }
+
+  .deal .content h3 {
+    color: var(--green);
+    font-size: 2.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .deal .content h1 {
+    color: var(--black);
+    font-size: 4rem;
+  }
+
+  .deal .content p {
+    padding: 1rem 0;
+    color: var(--light-color);
+    font-size: 1.4rem;
+    line-height: 2;
+  }
+}
 .reviews .reviews-slider .box {
   border: var(--border);
   padding: 2rem;
